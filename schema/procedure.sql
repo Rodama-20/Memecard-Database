@@ -21,6 +21,20 @@ CREATE TRIGGER init_card_trigger
     EXECUTE PROCEDURE init_card_after_subscribing();
 
 
+CREATE FUNCTION remove_card_after_unsubscribing()
+RETURNS trigger AS $$
+BEGIN
+    DELETE FROM card_user WHERE card_id IN (SELECT id FROM cards WHERE deck_id = OLD.deck_id) AND user_id = OLD.user_id;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER remove_card_trigger
+    BEFORE DELETE ON deck_user
+    FOR EACH ROW
+    EXECUTE PROCEDURE remove_card_after_unsubscribing();
+
+
 CREATE FUNCTION init_face_face_user_after_learning()
 RETURNS trigger AS $$
 DECLARE
