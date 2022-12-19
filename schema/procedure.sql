@@ -35,6 +35,25 @@ CREATE TRIGGER remove_card_trigger
     EXECUTE PROCEDURE remove_card_after_unsubscribing();
 
 
+CREATE FUNCTION remove_face_face_user_after_unsubscribing()
+RETURNS trigger AS $$
+DECLARE
+    face_id int;
+BEGIN
+    FOR face_id IN SELECT id FROM faces WHERE card_id == OLD.card_id
+    LOOP
+        DELETE FROM face_face_user WHERE (face_one_id = face_id OR face_two_id = face_id) AND user_id = OLD.user_id;
+    END LOOP;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER remove_face_face_user_trigger
+    BEFORE DELETE ON card_user
+    FOR EACH ROW
+    EXECUTE PROCEDURE remove_face_face_user_after_unsubscribing();
+
+
 CREATE FUNCTION init_face_face_user_after_learning()
 RETURNS trigger AS $$
 DECLARE
@@ -45,6 +64,9 @@ BEGIN
     LOOP
         FOR face_two IN SELECT * FROM faces JOIN face_types ON type_id = face_types.id WHERE card_id = NEW.card_id AND response = true
         LOOP
+            IF face_one.id = face_two.id THEN
+                CONTINUE;
+            END IF;
             INSERT INTO face_face_user (user_id, face_one_id, face_two_id, meme_id)
             VALUES (NEW.user_id, face_one.id, face_two.id, NULL);
         END LOOP;        

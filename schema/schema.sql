@@ -150,7 +150,7 @@ CREATE TABLE "face_face_user" (
   "user_id" int NOT NULL,
   "face_one_id" int NOT NULL,
   "face_two_id" int NOT NULL,
-  "next_due" timestamp NOT NULL DEFAULT now(),
+  "next_due" timestamp NOT NULL DEFAULT NOW(),
   "repetition" int NOT NULL DEFAULT 0,
   "interval" int NOT NULL DEFAULT 0,
   "easiness_factor" int NOT NULL DEFAULT 0,
