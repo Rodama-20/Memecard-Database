@@ -8,7 +8,7 @@ CREATE TABLE "users" (
   "email" varchar(50) NOT NULL UNIQUE,
   "username" varchar(20) NOT NULL UNIQUE,
   "password" varchar(256) NOT NULL,
-  "last_login" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  "last_login" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE "card_types" (
@@ -150,10 +150,10 @@ CREATE TABLE "face_face_user" (
   "user_id" int NOT NULL,
   "face_one_id" int NOT NULL,
   "face_two_id" int NOT NULL,
-  "next_due" timestamp NOT NULL DEFAULT NOW(),
+  "next_due" timestamptz NOT NULL DEFAULT NOW(),
   "repetition" int NOT NULL DEFAULT 0,
   "interval" int NOT NULL DEFAULT 0,
-  "easiness_factor" int NOT NULL DEFAULT 0,
+  "easiness_factor" float NOT NULL DEFAULT 2.5,
   "meme_id" int REFERENCES "memes" ("id") ON DELETE SET NULL,
   "is_known" boolean NOT NULL DEFAULT false,
   UNIQUE ("user_id", "face_one_id", "face_two_id"),
@@ -178,7 +178,7 @@ CREATE TABLE "rev_log" (
   "answer" int NOT NULL,
   "interval" int NOT NULL,
   "easiness_factor" int NOT NULL,
-  "time" timestamp NOT NULL,
+  "time" timestamptz NOT NULL,
   -- Revision log is lost when a card or a user is deleted
   FOREIGN KEY ("user_id")
     REFERENCES "users" ("id")
@@ -198,7 +198,7 @@ CREATE TABLE "update_deck_log" (
   "tag_id" int,
   "action" varchar(30) NOT NULL,
   "old_name" varchar(30) NOT NULL,
-  "time" timestamp NOT NULL,
+  "time" timestamptz NOT NULL,
   FOREIGN KEY ("user_id")
     REFERENCES "users" ("id")
     ON DELETE SET NULL
@@ -222,7 +222,7 @@ CREATE TABLE "update_tag_log" (
   "user_id" int,
   "tag_id" int,
   "old_name" varchar(30) NOT NULL,
-  "time" timestamp NOT NULL,
+  "time" timestamptz NOT NULL,
   FOREIGN KEY ("user_id")
     REFERENCES "users" ("id")
     ON DELETE SET NULL
@@ -239,7 +239,7 @@ CREATE TABLE "update_card_log" (
   "card_id" int,
   "face_id" int,
   "old_content" varchar NOT NULL,
-  "time" timestamp NOT NULL,
+  "time" timestamptz NOT NULL,
   FOREIGN KEY ("user_id")
     REFERENCES "users" ("id")
     ON DELETE SET NULL
@@ -255,7 +255,7 @@ CREATE TABLE "update_meme_log" (
   "user_id" int,
   "meme_id" int,
   "old_url" varchar(256) NOT NULL,
-  "time" timestamp NOT NULL,
+  "time" timestamptz NOT NULL,
   FOREIGN KEY ("user_id")
     REFERENCES "users" ("id")
     ON DELETE SET NULL

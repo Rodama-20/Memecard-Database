@@ -40,7 +40,7 @@ RETURNS trigger AS $$
 DECLARE
     face_id int;
 BEGIN
-    FOR face_id IN SELECT id FROM faces WHERE card_id == OLD.card_id
+    FOR face_id IN SELECT id FROM faces WHERE card_id = OLD.card_id
     LOOP
         DELETE FROM face_face_user WHERE (face_one_id = face_id OR face_two_id = face_id) AND user_id = OLD.user_id;
     END LOOP;
