@@ -1,3 +1,7 @@
+-- Stored procedures for database related operations
+-- for memecard application
+-- (c) 2023 He-Arc Cyrille Polier
+
 SET search_path TO memecard;
 SET client_encoding TO 'UTF8';
 
@@ -24,7 +28,9 @@ CREATE TRIGGER init_card_trigger
 CREATE FUNCTION remove_card_after_unsubscribing()
 RETURNS trigger AS $$
 BEGIN
-    DELETE FROM card_user WHERE card_id IN (SELECT id FROM cards WHERE deck_id = OLD.deck_id) AND user_id = OLD.user_id;
+    DELETE FROM card_user
+    WHERE card_id IN (SELECT id FROM cards WHERE deck_id = OLD.deck_id)
+    AND user_id = OLD.user_id;
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
@@ -42,7 +48,9 @@ DECLARE
 BEGIN
     FOR face_id IN SELECT id FROM faces WHERE card_id = OLD.card_id
     LOOP
-        DELETE FROM face_face_user WHERE (face_one_id = face_id OR face_two_id = face_id) AND user_id = OLD.user_id;
+        DELETE FROM face_face_user
+        WHERE (face_one_id = face_id OR face_two_id = face_id)
+        AND user_id = OLD.user_id;
     END LOOP;
     RETURN OLD;
 END;

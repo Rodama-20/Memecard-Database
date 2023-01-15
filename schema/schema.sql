@@ -1,3 +1,7 @@
+-- Schema definition for memecard application
+-- (c) 2023 He-Arc Cyrille Polier
+
+
 DROP SCHEMA IF EXISTS memecard CASCADE;
 CREATE SCHEMA memecard;
 SET search_path TO memecard;
