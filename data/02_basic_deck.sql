@@ -24,7 +24,7 @@ VALUES
     (1, 2, 3),
     (1, 2, 3);
 
-INSERT INTO "faces" ("card_id", "type_id", "content")
+INSERT INTO "faces" ("card_id", "card_type_face_type_id", "content")
 VALUES
 -- Vocabulary
     (1, 1, 'Bonjour'),
@@ -34,15 +34,15 @@ VALUES
     (3, 1, 'Merci'),
     (3, 2, 'Thank you'),
 -- Railway
-    (4, 3, 'Stop'),
-    (4, 3, 'Ancien signal stop'),
-    (4, 3, 'Nouveau signal stop'),
-    (5, 3, 'Rouler vitesse max'),
-    (5, 3, 'Ancien signal rouler vitesse max'),
-    (5, 3, 'Nouveau signal rouler vitesse max'),
-    (6, 3, 'Ralentir 60 km/h'),
-    (6, 3, 'Ancien signal ralentir 60 km/h'),
-    (6, 3, 'Nouveau signal ralentir 60 km/h');
+    (4, 5, 'Stop'),
+    (4, 6, 'Ancien signal stop'),
+    (4, 7, 'Nouveau signal stop'),
+    (5, 5, 'Rouler vitesse max'),
+    (5, 6, 'Ancien signal rouler vitesse max'),
+    (5, 7, 'Nouveau signal rouler vitesse max'),
+    (6, 5, 'Ralentir 60 km/h'),
+    (6, 6, 'Ancien signal ralentir 60 km/h'),
+    (6, 7, 'Nouveau signal ralentir 60 km/h');
 
 INSERT INTO "memes" ("card_id", "url")
 VALUES

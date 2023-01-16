@@ -68,9 +68,17 @@ DECLARE
     face_one faces%ROWTYPE;
     face_two faces%ROWTYPE;
 BEGIN
-    FOR face_one IN SELECT * FROM faces JOIN face_types ON type_id = face_types.id WHERE card_id = NEW.card_id AND question = true
+    FOR face_one IN SELECT *
+        FROM faces
+        JOIN card_type_face_type ON card_type_face_type_id = card_type_face_type.id
+        JOIN face_types ON face_types.id = face_type_id
+        WHERE card_id = NEW.card_id AND question = true
     LOOP
-        FOR face_two IN SELECT * FROM faces JOIN face_types ON type_id = face_types.id WHERE card_id = NEW.card_id AND response = true
+        FOR face_two IN SELECT *
+            FROM faces
+            JOIN card_type_face_type ON card_type_face_type_id = card_type_face_type.id
+            JOIN face_types ON face_types.id = face_type_id 
+            WHERE card_id = NEW.card_id AND response = true
         LOOP
             IF face_one.id = face_two.id THEN
                 CONTINUE;
