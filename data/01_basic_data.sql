@@ -2,7 +2,7 @@ SET search_path TO memecard;
 SET client_encoding TO 'UTF8';
 
 INSERT INTO "users" ("email", "username", "password")
-VALUES ('test@example.com', 'test', 'test');
+VALUES ('test@example.com', 'test', '01707299cbf3f8b6ea4b4686047139a6d32072e44eafe164eeed916c13c62f6740029db95eddc69d483d17abfe261191f6d1086b4c3e514a7be28699418062a7');
 
 INSERT INTO "card_types" ("name", "description")
 VALUES
