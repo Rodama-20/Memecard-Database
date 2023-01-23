@@ -181,7 +181,7 @@ CREATE TABLE "rev_log" (
   "card_id" int NOT NULL,
   "answer" int NOT NULL,
   "interval" int NOT NULL,
-  "easiness_factor" int NOT NULL,
+  "easiness_factor" float NOT NULL,
   "time" timestamptz NOT NULL,
   -- Revision log is lost when a card or a user is deleted
   FOREIGN KEY ("user_id")
